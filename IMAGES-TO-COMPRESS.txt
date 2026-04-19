@@ -1,0 +1,126 @@
+============================================================
+IMAGES TO COMPRESS / OPTIMIZE
+============================================================
+Priority-sorted list. Target: < 200 KB each (WebP, quality 80).
+Tool suggestions: https://squoosh.app  |  squoosh-cli  |  tinypng.com
+
+Total current weight of these images: ~120 MB.
+After compression you should get ~3-5 MB total (30-40x smaller).
+
+------------------------------------------------------------
+CRITICAL — HUGE (>5 MB each). Fix first.
+------------------------------------------------------------
+[10.6 MB]  src/assets/poli4-1.png         (Elegant Care - ProjectDetailPage mainImage)
+[10.4 MB]  src/assets/po1.png             (unused? check portfolioData.ts)
+[10.1 MB]  public/mntecom.png             (Textile E-Commerce product image)
+[ 9.3 MB]  src/assets/po3.png             (TrusComp portfolio image + mainImage)
+[ 8.7 MB]  src/assets/poli4.png           (Elegant Care portfolio image)
+[ 8.3 MB]  src/assets/poli1.png           (Lia Fashion portfolio image + mainImage)
+[ 8.1 MB]  src/assets/poli2.png           (Leats portfolio image + mainImage)
+[ 7.2 MB]  public/isuiteio.png            (iSuite CRM product image)
+
+------------------------------------------------------------
+HIGH — LARGE (1-5 MB each).
+------------------------------------------------------------
+[ 3.6 MB]  src/assets/poli5.png           (Civil ERP portfolio image + mainImage)
+[ 2.4 MB]  public/isuitec.png             (Quick Commerce product image)
+[ 2.3 MB]  public/mntpos.png              (POS System product image)
+[ 2.3 MB]  public/mntmm.png               (Mahal Management product image)
+[ 2.3 MB]  public/mntai.png               (iSuite AI product image)
+[ 1.8 MB]  src/assets/goals.png           (About page - duplicate of public/)
+[ 1.8 MB]  public/goals.png               (About page icon)
+[ 1.7 MB]  src/assets/mision.png          (duplicate of public/)
+[ 1.7 MB]  public/mision.png              (About page icon)
+[ 1.7 MB]  src/assets/vision.png          (duplicate of public/)
+[ 1.7 MB]  public/vision.png              (About page icon)
+[ 1.7 MB]  public/isuiteedu.png           (iSchool - appears in Ecosystem)
+[ 1.6 MB]  public/whowe.png               (About "who we are" illustration)
+[ 1.6 MB]  src/assets/values.png          (duplicate of public/)
+[ 1.6 MB]  public/values.png              (About page icon)
+[ 1.6 MB]  public/isuitehealth.png        (iHospital - appears in Ecosystem)
+[ 1.1 MB]  src/assets/aboutbg.png         (About page robot - VisionaryExperience)
+[ 1.1 MB]  public/aboutbg.png             (duplicate of src/assets/)
+[ 1.1 MB]  public/isuite-crm.png          (possibly legacy, check usage)
+[ 1.0 MB]  public/about.png               (AuthoritySection illustration)
+
+------------------------------------------------------------
+MEDIUM — (500 KB - 1 MB).
+------------------------------------------------------------
+[965 KB]   public/mission.png             (possible duplicate of mision.png - typo variant)
+[840 KB]   src/assets/p4.jpg              (testimonial avatar - should be < 50 KB)
+[780 KB]   public/robomnt2.png            (ServiceDetailPage "Why choose" robot)
+
+------------------------------------------------------------
+LOW-MEDIUM — (200-500 KB).
+------------------------------------------------------------
+[437 KB]   src/assets/p5.jpg              (testimonial avatar - should be < 50 KB)
+[400 KB]   public/mnt.png                 (ServicesPage IndustryImpact image)
+[371 KB]   public/Screenshot 2026-02-17 at 5.30.51 PM.png   ** DELETE - not used anywhere **
+[347 KB]   src/assets/clutch.png          (Testimonials - Clutch logo)
+[268 KB]   src/assets/po1.jpg             (unused? verify)
+
+------------------------------------------------------------
+OK — (under 200 KB, leave alone unless going WebP).
+------------------------------------------------------------
+[185 KB]   src/assets/hero-bg.jpg         (unused imports?)
+[185 KB]   public/robomnt copy.png        ** DELETE - duplicate of robomnt.png **
+[150 KB]   public/robomnt.png             (ServicesSection center robot)
+[ 97 KB]   src/assets/po1-1.png
+[ 82 KB]   src/assets/mntlogo-white.png
+[ 73 KB]   public/infrastructure.png
+[ 69 KB]   src/assets/mntlogo.png         (Navigation + Footer logo)
+[ 55 KB]   src/assets/p1.png              (testimonial avatar)
+[ 53 KB]   src/assets/p7.png              (testimonial avatar)
+[ 48 KB]   src/assets/p9.png              (testimonial avatar)
+[ 47 KB]   src/assets/p8.png              (testimonial avatar)
+[ 45 KB]   src/assets/p2.png              (testimonial avatar)
+[ 38 KB]   src/assets/p3.png              (testimonial avatar)
+[ 32 KB]   src/assets/p6.png              (testimonial avatar)
+
+============================================================
+FILES TO DELETE OUTRIGHT (unused / duplicates)
+============================================================
+- public/Screenshot 2026-02-17 at 5.30.51 PM.png  (random screenshot, 371 KB)
+- public/robomnt copy.png                         (copy of robomnt.png, 185 KB)
+
+============================================================
+DUPLICATE PAIRS (same file in both src/assets/ AND public/)
+============================================================
+Pick ONE location per image. Typical choice: keep in src/assets/
+(imported via `@/assets/...`) for hashing/CDN; delete from public/
+unless the image is loaded with a plain /path (e.g. in the HTML).
+
+Pairs that exist in both:
+- aboutbg.png    (src/assets + public)
+- goals.png      (src/assets + public)
+- mision.png     (src/assets + public)
+- vision.png     (src/assets + public)
+- values.png     (src/assets + public)
+
+Also check: public/mission.png vs public/mision.png — one may be a typo.
+
+============================================================
+RECOMMENDED WORKFLOW
+============================================================
+1. Install squoosh-cli:   npm i -g @squoosh/cli
+2. Compress public/ images in-place to WebP (kept as .png name for
+   now; or rename + update imports):
+
+   squoosh-cli --webp '{"quality":80}' -d public public/*.png
+
+3. Compress src/assets/:
+   squoosh-cli --webp '{"quality":80}' -d src/assets src/assets/poli*.png src/assets/po*.png src/assets/*.jpg
+
+4. Rename .webp back to .png OR update every import path.
+   (Easier route: keep filenames as .png but re-encode as WebP bytes —
+   browsers render WebP regardless of extension, but .webp extension
+   is cleaner.)
+
+5. Re-run `npm run build` and verify dist/ size drops.
+
+Alternative GUI: https://squoosh.app (drag-drop each file, set WebP
+quality 80, download, replace).
+
+Alternative CLI (lossless first pass): `imagemin` with `imagemin-pngquant`.
+
+============================================================
